@@ -1,4 +1,4 @@
-#Paqueterias
+#Paqueterias para el proyecto
 import tensorflow as tf
 import matplotlib
 from tensorflow import keras
@@ -12,9 +12,9 @@ matplotlib.use('TkAgg')
 import numpy as np
 import matplotlib.pyplot as plt
 
-class ODEsolver(Sequential):
+class SolODE(Sequential):
     loss_tracker = keras.metrics.Mean(name="loss")
-class ODEsolver(Sequential):
+class SolODE(Sequential):
     loss_tracker = keras.metrics.Mean(name="loss")
 
     def train_step(self, data):
@@ -40,7 +40,8 @@ class ODEsolver(Sequential):
         @property
         def metrics(self):
             return [keras.metrics.Mean(name='loss')]
-model = ODEsolver()
+
+model = SolODE()
 model.add(Dense(10, activation='tanh', input_shape=(1,)))
 model.add(Dense(1, activation='tanh'))
 model.add(Dense(1, activation='linear'))
@@ -58,7 +59,7 @@ y = [((x*np.sin(x))+(2*np.cos(x))-((2/x)*np.sin(x))) for x in x_testv]
 a = model.predict(x_testv)
 
 plt.grid()
-plt.title('Red vs Analítica')
+plt.title('Red vs Analitica')
 
 plt.plot(x_testv, a)
 plt.plot(x_testv, y)

@@ -6,7 +6,7 @@ from keras.optimizers import RMSprop, Adam
 import matplotlib.pyplot as plt
 import numpy as np
 
-class ODEsolver(Sequential):
+class SolODE(Sequential):
     def _init_(self, **kwargs):
         super()._init_(**kwargs)
         self.loss_tracker = keras.metrics.Mean(name='loss')
@@ -35,7 +35,7 @@ class ODEsolver(Sequential):
         self.loss_tracker.update_state(loss)
         return {"loss": self.loss_tracker.result()}
 
-model = ODEsolver()
+model = SolODE()
 
 model.add(Dense(10, activation='tanh', input_shape=(1,)))
 model.add(Dense(1, activation='tanh'))
