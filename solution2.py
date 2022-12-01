@@ -1,3 +1,4 @@
+#paqueterias
 import tensorflow as tf
 from tensorflow import keras
 from keras.models import Sequential
@@ -29,7 +30,6 @@ class SolODE(Sequential):
             eq = x * dy + y_pred - x ** 2 * keras.backend.cos(x)
             ic = y_0
             loss = keras.losses.mean_squared_error(0., eq) + keras.losses.mean_squared_error(0., ic)
-
         grads = tape.gradient(loss, self.trainable_variables)
         self.optimizer.apply_gradients(zip(grads, self.trainable_variables))
         self.loss_tracker.update_state(loss)
@@ -51,9 +51,6 @@ history = model.fit(x, epochs=500, verbose=1)
 x_testv = tf.linspace(-5, 5, 100)
 a = model.predict(x_testv)
 plt.plot(x_testv, a)
-
 plt.show()
-exit()
 
-model.save('red2.h5')
-modelo_cargado = tf.keras.models.load_model('red5.h5')
+exit()

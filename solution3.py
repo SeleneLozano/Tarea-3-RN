@@ -12,10 +12,8 @@ import numpy as np
 loss_tracker = keras.metrics.Mean(name="loss")
 
 
-class ODEsolver(Sequential):
+class SolODE(Sequential):
      def train_step(self, data):
-         # Unpack the data. Its structure depends on your model and
-         # on what you pass to `fit()`.
          x = tf.random.uniform((80, 1), minval=-5, maxval=5)
 
          with tf.GradientTape() as tape:
@@ -33,25 +31,17 @@ class ODEsolver(Sequential):
         # Compute gradients
          trainable_vars = self.trainable_variables
          gradients = tape.gradient(loss, trainable_vars)
-        # Update weights
          self.optimizer.apply_gradients(zip(gradients, trainable_vars))
-        # Update metrics (includes the metric that tracks the loss)
-        #self.compiled_metrics.update_state(y, y_pred)
          loss_tracker.update_state(loss)
-        # Return a dict mapping metric names to current value
+    
          return {m.name: m.result() for m in self.metrics}
 
      @property
      def metrics(self):
-       # We list our `Metric` objects here so that `reset_states()` can be
-       # called automatically at the start of each epoch
-       # or at the start of `evaluate()`.
-       # If you don't implement this property, you have to call
-       # `reset_states()` yourself at the time of your choosing.
        return [loss_tracker]
 
 
-model = ODEsolver()
+model = SolODE()
 
 model.add(Dense(10, activation='tanh', input_shape=(1,)))
 model.add(Dense(1, activation='tanh'))
@@ -75,4 +65,4 @@ exit()
 model.save("red.h5")
 
 #para cargar la red:
-modelo_cargado = tf.keras.models.load_model('red.h5')
+modelo_cargado = tf.keras.models.load_model('red.h5Sol')
